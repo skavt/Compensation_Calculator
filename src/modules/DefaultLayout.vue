@@ -1,6 +1,6 @@
 <template>
-  <div id="menu-content-wrapper" class="d-flex justify-content-between">
-    <div class="content">
+  <div class="row content-wrapper">
+    <div class="col-md-8 col-sm-12 content">
       <h1>Quam Tristique Condimentum</h1>
       <p>
         Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cum sociis
@@ -9,8 +9,8 @@
         tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Vestibulum id ligula
         porta felis euismod semper.
       </p>
-      <div class="d-flex justify-content-between">
-        <div>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
           <h2>Fringilla Euismod Adipiscing Ipsum</h2>
           <p>
             Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas faucibus
@@ -18,7 +18,9 @@
             interdum. Aenean lacinia bibendum nulla sed.
           </p>
         </div>
-        <b-img class="image" src="assets/main-image.png"/>
+        <div class="col-md-6 col-sm-12">
+          <b-img class="image" src="assets/main-image.png"/>
+        </div>
       </div>
       <ul class="list">
         <li>Tellus Ullamcorper Inceptos</li>
@@ -47,21 +49,21 @@
 <style lang="scss">
 
   #app {
+    background: linear-gradient(90deg, #2B303A 0%, #3F4756 100%);
     height: 100%;
     display: flex;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     margin-top: 0;
   }
 
-  #menu-content-wrapper {
-    background: linear-gradient(90deg, #2B303A 0%, #3F4756 100%);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  .content-wrapper {
+    padding: 100px;
   }
 
   .content {
+    padding-right: 50px;
+
     h1 {
       font-family: 'Sora';
       font-style: normal;
@@ -98,6 +100,7 @@
     }
 
     .list {
+      padding-left: 0;
       list-style-type: none;
       font-family: 'Sora';
       font-style: normal;
