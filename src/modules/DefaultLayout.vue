@@ -34,8 +34,40 @@
         <li>Parturient Bibendum</li>
       </ul>
     </div>
-    <div class="calculator">
-
+    <div class="col-md-4 col-sm-12 calculator">
+      <div class="calculator-content">
+        <h4>Compensation Calculator</h4>
+        <b-form class="calculator-form">
+          <label>Average income</label>
+          <b-input-group append="€">
+            <b-input v-model="income"></b-input>
+          </b-input-group>
+          <label>Days on sick-leave</label>
+          <b-input-group append="days">
+            <b-input v-model="sickDays"></b-input>
+          </b-input-group>
+          <b-checkbox v-model="haveTuberculosis">I have tuberculosis</b-checkbox>
+          <b-button class="calculate-button mt-2" @click="onCalculateClick" :disabled="!sickDays || !income">
+            Calculate
+          </b-button>
+        </b-form>
+        <hr/>
+        <div class="row result">
+          <div class="col-6">
+            <p class="compensate-header">The employer compensates<br/><b>{{ employerCompensateDays }} days</b></p>
+            <p class="compensate mb-0">{{ employerCompensate | round }}€</p>
+            <p class="daily-allowance mb-0">Daily allowance <br/>{{ dailyAllowance | round }} €</p>
+          </div>
+          <div class="col-6">
+            <p class="compensate-header">Health Insurance compensates<br/><b>{{ insuranceCompensateDays }} days</b></p>
+            <p class="compensate mb-0">{{ insuranceCompensate | round }}€</p>
+            <p class="daily-allowance mb-0">Daily allowance <br/>{{ dailyAllowance | round }} €</p>
+          </div>
+        </div>
+        <hr/>
+        <p class="total-compensation-title mb-0">Compensation total for {{ totalSickDays }} days (net)</p>
+        <p class="total-compensation">{{ totalCompensation | round }}€</p>
+      </div>
     </div>
   </div>
 </template>
@@ -145,6 +177,162 @@
     .curabitur-blandit {
       text-decoration: underline;
       color: #E1261C;
+    }
+  }
+
+  .calculator {
+    .calculator-content {
+      height: 755px;
+      background: #FFFFFF;
+      clip-path: polygon(5% 0, 95% 0, 100% 3%, 115% 90%, 95% 100%, 10% 102%, 0 97%, 0 3%);
+
+      h4 {
+        padding: 80px 20px 8px 20px;
+        font-family: 'Sora';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 25px;
+        letter-spacing: -0.02em;
+        color: #111317;
+      }
+
+      label {
+        font-family: 'Sora';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: #111317;
+        margin-bottom: 2px;
+        margin-top: 8px;
+      }
+
+      .calculate-button {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 20px 40px;
+        gap: 10px;
+        background: linear-gradient(90deg, #911812 0%, #E1261C 100%);
+        border-radius: 30px;
+        border-color: unset;
+        font-family: 'Sora';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 20px;
+        color: #FFFFFF;
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+      }
+    }
+  }
+
+  .compensate-header {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
+    text-align: center;
+    color: #111317;
+  }
+
+  .compensate {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 20px;
+    align-items: center;
+    text-align: center;
+    color: #111317;
+  }
+
+  .daily-allowance {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #7A818E;
+  }
+
+  .total-compensation-title {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
+    align-items: center;
+    text-align: center;
+    color: #111317;
+  }
+
+  .total-compensation {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    align-items: center;
+    text-align: center;
+    color: #111317;
+  }
+
+  .calculator-form {
+    padding: 0 20px 0 20px;
+  }
+
+  .result {
+    padding: 0 20px 0 20px;
+  }
+
+  .input-group-text {
+    border-left: unset;
+    border-right: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+    border-top: 1px solid #ced4da;
+    background-color: unset;
+    font-weight: bold;
+    color: #111317;
+  }
+
+  .form-control {
+    border-right: unset;
+    border-left: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+    border-top: 1px solid #ced4da;
+
+    &:focus {
+      box-shadow: unset;
+      outline: none;
+      border-color: #ced4da;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .content-wrapper {
+      padding: 50px;
+    }
+
+    .list {
+      padding-top: 10px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .content {
+      padding-right: 0;
+    }
+
+    .calculator {
+      padding-top: 25px;
+      padding-bottom: 50px;
     }
   }
 </style>
