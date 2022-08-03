@@ -75,6 +75,53 @@
 <script>
   export default {
     name: "DefaultLayout",
+    data() {
+      return {
+        income: null,
+        sickDays: null,
+        haveTuberculosis: false,
+        employerCompensate: 0,
+        insuranceCompensate: 0,
+        employerCompensateDays: 0,
+        insuranceCompensateDays: 0,
+        dailyAllowance: 0,
+        totalCompensation: 0,
+        totalSickDays: 0,
+      }
+    },
+    methods: {
+      onCalculateClick() {
+        this.computedSickDays();
+        this.computedCompensations();
+        this.totalSickDays = this.sickDays;
+      },
+      computedSickDays() {
+        const sickDays = this.haveTuberculosis && this.sickDays > 240 ? 240 : this.sickDays > 182 ? 182 : this.sickDays;
+        const notCompensationDays = sickDays - 3;
+        const notInsuranceCompensationDays = sickDays - 8;
+
+        if (notCompensationDays > 0) {
+          if (this.sickDays >= 9) {
+            this.insuranceCompensateDays = notInsuranceCompensationDays;
+            this.employerCompensateDays = notCompensationDays - this.insuranceCompensateDays;
+          } else {
+            this.insuranceCompensateDays = 0;
+            this.employerCompensateDays = notCompensationDays;
+          }
+        } else {
+          this.insuranceCompensateDays = 0;
+          this.employerCompensateDays = 0;
+        }
+      },
+      computedCompensations() {
+        const yearSalary = this.income * 12;
+        const percentOfSalary = yearSalary * 0.7;
+        this.dailyAllowance = this.haveTuberculosis ? percentOfSalary / 240 : percentOfSalary / 182;
+        this.employerCompensate = this.dailyAllowance * this.employerCompensateDays;
+        this.insuranceCompensate = this.dailyAllowance * this.insuranceCompensateDays;
+        this.totalCompensation = this.employerCompensate + this.insuranceCompensate;
+      },
+    },
   }
 </script>
 
